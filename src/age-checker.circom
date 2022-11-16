@@ -1,6 +1,6 @@
 pragma circom 2.1.0;
 
-include "../../node_modules/circomlib/circuits/comparators.circom";
+include "../node_modules/circomlib/circuits/comparators.circom";
 
 /**
  * Verifies that a user is older than 18 years old.

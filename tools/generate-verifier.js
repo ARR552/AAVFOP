@@ -3,7 +3,7 @@ const { execSync } = require("child_process");
 const path = require("path");
 
 async function main(){
-    const pathCircuit = path.join(__dirname, "../src/circuits/age-checker.circom");
+    const pathCircuit = path.join(__dirname, "../src/age-checker.circom");
     const cmd = `circom ${pathCircuit} --r1cs --wasm`;
     console.log("Building circuit");
     execSync(cmd);
