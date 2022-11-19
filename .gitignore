@@ -107,12 +107,12 @@ package-lock.json
 artifacts
 cache
 
-get-NFT-test_js
-get-NFT-test.r1cs
-getnft_0000.zkey
-getnft_0001.zkey
+age-checker_js
+age-checker.r1cs
+age-checker_0000.zkey
+age-checker_0001.zkey
 pot13_0000.ptau
 pot13_0001.ptau
 pot13_final.ptau
 verification_key.json
-verifier.sol
+tools/verifier.sol

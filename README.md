@@ -1,4 +1,4 @@
-# AAVFOP
+# AAVFOP (Automatic Age Verifier For Online Purchases)
 
 ## Pre-requisites
 
@@ -35,3 +35,18 @@
     snarkjs zkey export solidityverifier age-checker_0001.zkey verifier.sol
 ```
 
+## Generate witness.wtns
+```
+node generate_witness.js age-checker.wasm ../input.json witness.wtns
+```
+
+## Generate proof
+```
+snarkjs groth16 prove age-checker_0001.zkey witness.wtns proof.json public.json
+public y proof son ficheros de salida
+```
+
+## Verify proof
+```
+snarkjs groth16 verify ../verification_key.json public.json proof.json
+```
