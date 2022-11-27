@@ -62,3 +62,16 @@ cd test
 npx hardhat test contracts/aavfop.test.js
 npx hardhat test contracts/realVerifier.test.js
 ```
+
+## Deployment on Goerli network:
+These smart contracs have been verified in etherscan.
+
+### Verifier
+```
+0xCe322f793217d416F8fb31c20dDbA1A11B8455e8
+```
+
+### Aavfop
+```
+0x7d0F1761B834cC59129D95ECED9A9967Ac695324
+```
