@@ -1,5 +1,5 @@
 {
-  "name": "devconvi-workshop",
+  "name": "aavfop",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/krlosMata/devconVI-workshop.git"
+    "url": "git+https://github.com/ARR552/AAVFOP.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/krlosMata/devconVI-workshop/issues"
+    "url": "https://github.com/ARR552/AAVFOP/issues"
   },
-  "homepage": "https://github.com/krlosMata/devconVI-workshop#readme",
+  "homepage": "https://github.com/ARR552/AAVFOP#readme",
   "dependencies": {
     "@hermeznetwork/commonjs": "^0.3.3",
     "@nomiclabs/hardhat-ethers": "^2.0.2",

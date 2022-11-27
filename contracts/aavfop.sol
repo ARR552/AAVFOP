@@ -29,12 +29,17 @@ contract AAVFOP is Ownable {
     /**
      * @dev Emitted when a new payment is received
      */
-    event Payment(address indexed client, uint256 amount, uint256 lastPurchaseIndex, uint256 productIndex);
+    event Payment(address indexed client, uint256 amount, uint256 lastPurchaseIndex, uint256 indexed productIndex);
 
     /**
      * @dev Emitted when a new product is added or modified
      */
-    event Product(string name, uint256 productIndex, uint256 price, uint256 amount);
+    event Product(string name, uint256 indexed productIndex, uint256 price, uint256 amount);
+
+    /**
+     * @dev Emitted when funds are claimed
+     */
+    event Claimed(address indexed destAddr, uint256 amount);
 
     constructor(
         string memory _storeName,
@@ -45,7 +50,7 @@ contract AAVFOP is Ownable {
     }
 
 
-    function Buy(
+    function buy(
         uint256 amount, // Units of product
         uint256 productIndex,
         uint256[2] calldata proofA,
@@ -54,26 +59,26 @@ contract AAVFOP is Ownable {
     ) public payable {
         // Check product exists
         require(
-            keccak256(abi.encode(ProductInfo[productIndex].name)) != keccak256(""),
-            "OnlinePurchaseSystem::Buy: PRODUCT_DOES_NOT_EXIST"
+            keccak256(abi.encode(ProductInfo[productIndex].name)) != keccak256(abi.encode("")),
+            "OnlinePurchaseSystem::buy: PRODUCT_DOES_NOT_EXIST"
         );
 
         // Check product exists
         require(
             ProductInfo[productIndex].amount != 0,
-            "OnlinePurchaseSystem::Buy: PRODUCT_SOLD_OUT"
+            "OnlinePurchaseSystem::buy: PRODUCT_SOLD_OUT"
         );
 
         // Check that amount * productPrice == msg.Value
         require(
             amount * ProductInfo[productIndex].price == msg.value,
-            "OnlinePurchaseSystem::Buy: INCORRECT_AMOUNT"
+            "OnlinePurchaseSystem::buy: INCORRECT_AMOUNT"
         );
 
         // Verify proof
         require(
             zkVerifier.verifyProof(proofA, proofB, proofC, [uint256(uint160(msg.sender))]),
-            "OnlinePurchaseSystem::Buy: INVALID_PROOF"
+            "OnlinePurchaseSystem::buy: INVALID_PROOF"
         );
 
         lastPurchaseIndex++;
@@ -84,17 +89,21 @@ contract AAVFOP is Ownable {
 
     // Add product
     function addProduct(string memory name, uint256 price, uint256 amount) external onlyOwner {
-        lastPurchaseIndex++;
+        lastProduct++;
 
-        ProductInfo[lastPurchaseIndex].name = name;
-        ProductInfo[lastPurchaseIndex].price = price;
-        ProductInfo[lastPurchaseIndex].amount = amount;
+        ProductInfo[lastProduct].name = name;
+        ProductInfo[lastProduct].price = price;
+        ProductInfo[lastProduct].amount = amount;
 
-        emit Product(name, lastPurchaseIndex, price, amount);
+        emit Product(name, lastProduct, price, amount);
     }
 
     // Modify product
     function modifyProduct(string memory name, uint256 productIndex, uint256 price, uint256 amount) external onlyOwner {
+        require(
+            keccak256(abi.encode(ProductInfo[productIndex].name)) != keccak256(abi.encode("")),
+            "OnlinePurchaseSystem::modifyProduct: PRODUCT_DOES_NOT_EXIST"
+        );
         ProductInfo[productIndex].name = name;
         ProductInfo[productIndex].price = price;
         ProductInfo[productIndex].amount = amount;
@@ -110,5 +119,6 @@ contract AAVFOP is Ownable {
         );
 
         require(success, "OnlinePurchaseSystem::claimFunds: ETH_TRANSFER_FAILED");
+        emit Claimed(destAddr, amount);
     }
 }

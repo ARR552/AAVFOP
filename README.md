@@ -50,3 +50,15 @@ public y proof son ficheros de salida
 ```
 snarkjs groth16 verify ../verification_key.json public.json proof.json
 ```
+
+## Run circuit tests
+```
+npx hardhat test test/age-checker.test.js
+```
+
+## Run Smart contract tests
+```
+cd test
+npx hardhat test contracts/aavfop.test.js
+npx hardhat test contracts/realVerifier.test.js
+```
