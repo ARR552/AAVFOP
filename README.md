@@ -37,12 +37,14 @@
 
 ## Generate witness.wtns
 ```
+cd tools/age-checker_js/
 node generate_witness.js age-checker.wasm ../input.json witness.wtns
 ```
 
 ## Generate proof
 ```
-snarkjs groth16 prove age-checker_0001.zkey witness.wtns proof.json public.json
+cd tools/age-checker_js/
+snarkjs groth16 prove ../age-checker_0001.zkey witness.wtns proof.json public.json
 public y proof son ficheros de salida
 ```
 
@@ -68,10 +70,10 @@ These smart contracs have been verified in etherscan.
 
 ### Verifier
 ```
-0xCe322f793217d416F8fb31c20dDbA1A11B8455e8
+0x0452c390556C62C3e2caAb355124F7Bbc945AA6B
 ```
 
 ### Aavfop
 ```
-0x7d0F1761B834cC59129D95ECED9A9967Ac695324
+0x54a21D33f0e10876F746cAB37Add4Ee494Ab300f
 ```
