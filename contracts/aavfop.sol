@@ -56,7 +56,7 @@ contract AAVFOP is Ownable {
         uint256[2] calldata proofA,
         uint256[2][2] calldata proofB,
         uint256[2] calldata proofC
-    ) public payable {
+    ) external payable {
         // Check product exists
         require(
             keccak256(abi.encode(ProductInfo[productIndex].name)) != keccak256(abi.encode("")),
@@ -89,6 +89,11 @@ contract AAVFOP is Ownable {
 
     // Add product
     function addProduct(string memory name, uint256 price, uint256 amount) external onlyOwner {
+        require(
+            keccak256(abi.encode(name)) != keccak256(abi.encode("")),
+            "OnlinePurchaseSystem::addProduct: PRODUCT_NAME_CANT_BE_EMPTY"
+        );
+    
         lastProduct++;
 
         ProductInfo[lastProduct].name = name;
@@ -103,6 +108,10 @@ contract AAVFOP is Ownable {
         require(
             keccak256(abi.encode(ProductInfo[productIndex].name)) != keccak256(abi.encode("")),
             "OnlinePurchaseSystem::modifyProduct: PRODUCT_DOES_NOT_EXIST"
+        );
+        require(
+            keccak256(abi.encode(name)) != keccak256(abi.encode("")),
+            "OnlinePurchaseSystem::modifyProduct: PRODUCT_NAME_CANT_BE_EMPTY"
         );
         ProductInfo[productIndex].name = name;
         ProductInfo[productIndex].price = price;
