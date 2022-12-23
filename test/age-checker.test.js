@@ -10,7 +10,7 @@ describe("Test age-checker", function () {
     let circuit;
 
     before( async() => {
-        circuit = await wasm_tester(path.join(__dirname, "circuits", "age-checker.circom"));
+        circuit = await wasm_tester(path.join(__dirname, "../src", "age-checker.circom"));
     });
 
     it("Should check age of an old person", async () => {
